@@ -106,13 +106,13 @@ route_design
 #-----------------------------------------------------------------------
 ## Post Route setup and hold optimization
 #-----------------------------------------------------------------------
-# set_db extract_rc_engine post_route
-# set_db extract_rc_effort_level medium
-#
-# # enable Signal Integrity analysis
-# set_db delaycal_enable_si true
-#
-# opt_design -post_route -setup -hold -report_dir RPT/STA
+set_db extract_rc_engine post_route
+set_db extract_rc_effort_level medium
+
+# enable Signal Integrity analysis
+set_db delaycal_enable_si true
+
+opt_design -post_route -setup -hold -report_dir RPT/STA
 
 #-----------------------------------------------------------------------
 ## Add filler cells
@@ -132,15 +132,15 @@ check_connectivity  -out_file RPT/check_connectivity.rpt
 ## Signoff extraction
 #-----------------------------------------------------------------------
 # Select QRC extraction to be in signoff mode
-# set_db extract_rc_engine post_route
-# set_db extract_rc_effort_level signoff
-# set_db extract_rc_coupled true
-# set_db extract_rc_lef_tech_file_map ../DATA/qx/lefdef.layermap
-#
-# extract_rc
-#
-# # Generate RC spefs  for WC_rc & BC_rc corners
-# write_parasitics -rc_corner deafult_rc -spef_file out/design_default_rc.spef
+set_db extract_rc_engine post_route
+set_db extract_rc_effort_level signoff
+set_db extract_rc_coupled true
+set_db extract_rc_lef_tech_file_map cds45.layermap
+
+extract_rc
+
+# Generate RC spefs  for WC_rc & BC_rc corners
+write_parasitics -rc_corner default_rc -spef_file out/design_default_rc.spef
 
 #-----------------------------------------------------------------------
 ## Saving verilog netlist

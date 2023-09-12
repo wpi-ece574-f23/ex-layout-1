@@ -12,4 +12,4 @@ layout:
 	innovus -stylus -files run_innovus.tcl
 
 clean:
-	rm -rf reports syndb *~ innovus.cmd* innovus.log* genus.cmd* genus.log* RPT out synthDb fv rc_model.bin *.rpt
+	rm -rf reports syndb *~ innovus.cmd* innovus.log* genus.cmd* genus.log* RPT out synthDb fv rc_model.bin *.rpt qrc*.log
