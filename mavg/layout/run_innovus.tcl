@@ -52,13 +52,14 @@ route_special -connect {core_pin} -core_pin_target {first_after_row_end} -nets {
 #-----------------------------------------------------------------------
 
 check_timing
-time_design -pre_place -report_prefix preplace -report_dir RPT/STA
+time_design -pre_place -report_prefix preplace -report_dir reports/STA
 
 #-----------------------------------------------------------------------
 ## Placement and Pre CTS optimization
 #-----------------------------------------------------------------------
 
-place_opt_design -report_dir RPT/STA
+place_opt_design -report_dir reports/STA
+
 set_db add_tieoffs_cells { TIEHI TIELO }
 add_tieoffs
 
@@ -66,7 +67,7 @@ add_tieoffs
 ## Pre Clock tree timing analysis
 #-----------------------------------------------------------------------
 
-time_design -pre_cts -report_dir RPT/STA
+time_design -pre_cts -report_dir reports/STA
 
 #-----------------------------------------------------------------------
 ## Clock Tree Synthesis
@@ -77,8 +78,8 @@ set_db cts_update_io_latency false
 
 clock_design
 
-report_clock_trees -summary -out_file RPT/report_clock_trees.rpt
-report_skew_groups  -summary -out_file RPT/report_ccopt_skew_groups.rpt
+report_clock_trees -summary -out_file reports/report_clock_trees.rpt
+report_skew_groups  -summary -out_file reports/report_ccopt_skew_groups.rpt
 
 #-----------------------------------------------------------------------
 ## Post CTS setup and hold optimization
@@ -89,11 +90,11 @@ reset_clock_tree_latency [all_clocks]
 set_propagated_clock [all_clocks]
 set_interactive_constraint_modes []
 
-opt_design -post_cts        -report_dir RPT/STA
-time_design -post_cts       -report_dir RPT/STA
+opt_design -post_cts        -report_dir reports/STA
+time_design -post_cts       -report_dir reports/STA
 
-opt_design -post_cts -hold -report_dir RPT/STA
-time_design -post_cts -hold -report_dir RPT/STA
+opt_design -post_cts -hold -report_dir reports/STA
+time_design -post_cts -hold -report_dir reports/STA
 
 #-----------------------------------------------------------------------
 ## Global and Detail routing
@@ -111,8 +112,9 @@ set_db extract_rc_effort_level medium
 
 # enable Signal Integrity analysis
 set_db delaycal_enable_si true
+set_db timing_analysis_type ocv
 
-opt_design -post_route -setup -hold -report_dir RPT/STA
+opt_design -post_route -setup -hold -report_dir reports/STA
 
 #-----------------------------------------------------------------------
 ## Add filler cells
