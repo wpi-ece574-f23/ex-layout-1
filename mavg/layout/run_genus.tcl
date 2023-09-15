@@ -55,4 +55,16 @@ report_power  > reports/${basename}_report_power.rpt
 report_area   > reports/${basename}_report_area.rpt
 report_qor    > reports/${basename}_report_qor.rpt
 
+file mkdir synout
+set synout synout
+
+set outputnetlist     ${synout}/${basename}_netlist.v
+set outputconstraints ${synout}/${basename}_constraints.sdc
+set outputdelays      ${synout}/${basename}_delays.sdf
+
+write_hdl > $outputnetlist
+write_sdc -view func_default > $outputconstraints
+write_sdf -timescale ns -nonegchecks -recrem split -edges check_edge  -setuphold split > $outputdelays
+
+
 exit
